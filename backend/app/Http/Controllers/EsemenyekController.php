@@ -12,7 +12,8 @@ class EsemenyekController extends Controller
      */
     public function index()
     {
-        //
+         $esemenyeks=esemenyek::all();
+        return response()->json($kategoriaks);
     }
 
     /**
@@ -28,7 +29,16 @@ class EsemenyekController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $validated = $request -> validate([
+            'id'=>'required|biginteger|exists:esemenyeks,id',
+            'kategoria_id'=>'required|biginteger',
+            'esemeny_nev'=>'required|string|min:1|max:20',
+            'leiras'=>'required|text',
+            'datum'=>'required|timestamp',
+            'resztvevok'=>'required|integer',
+            'ar'=>'required|integer',
+            'kepUrl'=>'required|string|min:1|max:225',
+        ]);
     }
 
     /**
@@ -36,7 +46,11 @@ class EsemenyekController extends Controller
      */
     public function show(esemenyek $esemenyek)
     {
-        //
+         $esemenyeks=Esemenyek::find($id);
+        if(!esemenyeks){
+            return response()->json(['message'=>'Nincs ilyen tevékenység'],404);
+        }
+        return response()->json($esemenyeks);
     }
 
     /**
@@ -52,7 +66,21 @@ class EsemenyekController extends Controller
      */
     public function update(Request $request, esemenyek $esemenyek)
     {
-        //
+        $esemenyeks=esemenyek::find($id);
+        if (!$esemenyeks) {
+            return response()->json(['message'=>'Nincs találat'],404);
+        $validated = $request -> validate([
+            'id'=>'required|biginteger|exists:esemenyeks,id',
+            'kategoria_id'=>'required|biginteger',
+            'esemeny_nev'=>'required|string|min:1|max:20',
+            'leiras'=>'required|text',
+            'datum'=>'required|timestamp',
+            'resztvevok'=>'required|integer',
+            'ar'=>'required|integer',
+            'kepUrl'=>'required|string|min:1|max:225',
+        ]);
+        }
+
     }
 
     /**

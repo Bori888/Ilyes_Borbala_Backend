@@ -12,7 +12,9 @@ class KategoriakController extends Controller
      */
     public function index()
     {
-        //
+        $kategoriaks=Kategoriak::with('esemenyeks')->get();
+        return response()->json($kategoriaks);
+
     }
 
     /**
@@ -28,7 +30,10 @@ class KategoriakController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request -> validate([
+            'id'=>'required|biginteger|exists:kategoriaks,id',
+            'kategoria_nev'=>'required|enum',
+        ]);
     }
 
     /**
@@ -36,7 +41,11 @@ class KategoriakController extends Controller
      */
     public function show(Kategoriak $kategoriak)
     {
-        //
+        $kategoriaks=kategoriak::find($id);
+        if(!kategoriaks){
+            return response()->json(['message'=>'Nincs ilyen tevékenység'],404);
+        }
+        return response()->json($kategoriaks);
     }
 
     /**
@@ -52,7 +61,15 @@ class KategoriakController extends Controller
      */
     public function update(Request $request, Kategoriak $kategoriak)
     {
-        //
+        $kategoriaks=Kategoriak::find($id);
+        if (!$kategoriaks) {
+            return response()->json(['message'=>'Nincs találat'],404);
+            $validated = $request -> validate([
+            'id'=>'required|biginteger|exists:kategoriaks,id',
+            'kategoria_nev'=>'required|enum',
+       ]);
+        }
+
     }
 
     /**

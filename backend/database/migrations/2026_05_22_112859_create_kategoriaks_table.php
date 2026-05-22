@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kategoriaks', function (Blueprint $table) {
-            $table->id();
+            $table->biginteger('id');
+            $table->foreigId('id')->constrained('esemenyeks','kategori_id');
+            $table->enum('kategoria_nev');
             $table->timestamps();
         });
     }

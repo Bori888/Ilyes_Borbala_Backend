@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('esemenyeks', function (Blueprint $table) {
-            $table->id();
+            $table->biginteger('id');
+            $table->integer('kategoria_id');
+            $table->string('esemeny-nev',20);
+            $table->text(leiras);
+            $table->timestamp('datum');
+            $table->integer('resztvevok');
+            $table->integer('ar');
+            $table->string('string',255);
             $table->timestamps();
         });
     }
